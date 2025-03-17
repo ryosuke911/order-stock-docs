@@ -1,0 +1,1246 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Project API Documentation",
+    "version": "1.0.0",
+    "description": "API documentation for the project endpoints"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "API Server"
+    }
+  ],
+  "paths": {
+    "/api/products": {
+      "post": {
+        "summary": "商品マスタ登録",
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "product_code": {
+                      "type": "string"
+                    },
+                    "product_name": {
+                      "type": "string"
+                    },
+                    "inventory_location": {
+                      "type": "string"
+                    },
+                    "inventory_lower_limit": {
+                      "type": "integer"
+                    },
+                    "inventory_upper_limit": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "登録成功"
+          },
+          "400": {
+            "description": "リクエストが不正"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "product_code",
+                  "product_name",
+                  "inventory_location",
+                  "inventory_upper_limit",
+                  "inventory_lower_limit"
+                ],
+                "properties": {
+                  "product_code": {
+                    "type": "string"
+                  },
+                  "product_name": {
+                    "type": "string"
+                  },
+                  "inventory_location": {
+                    "type": "string"
+                  },
+                  "inventory_lower_limit": {
+                    "type": "integer"
+                  },
+                  "inventory_upper_limit": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "description": "<h2 id=\"\">概要</h2> <p>APIに商品コード、商品名、在庫拠点、在庫上限、在庫下限をPOSTする。</p>",
+        "tags": [
+          "在庫情報管理"
+        ]
+      }
+    },
+    "/api/products/{product_code}": {
+      "put": {
+        "summary": "商品マスタ更新",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "product_code": {
+                      "type": "string"
+                    },
+                    "product_name": {
+                      "type": "string"
+                    },
+                    "inventory_location": {
+                      "type": "string"
+                    },
+                    "inventory_lower_limit": {
+                      "type": "integer"
+                    },
+                    "inventory_upper_limit": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "更新成功"
+          },
+          "400": {
+            "description": "リクエストが不正"
+          },
+          "404": {
+            "description": "商品が見つからない"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "product_code",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [],
+                "properties": {
+                  "product_name": {
+                    "type": "string"
+                  },
+                  "inventory_location": {
+                    "type": "string"
+                  },
+                  "inventory_lower_limit": {
+                    "type": "integer"
+                  },
+                  "inventory_upper_limit": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "description": "<h2 id=\"\">概要</h2> <p>APIに商品コードと更新項目（商品名、在庫拠点、在庫上限、在庫下限など）をPUTする。</p>",
+        "tags": [
+          "在庫情報管理"
+        ]
+      }
+    },
+    "/api/inbounds": {
+      "post": {
+        "summary": "入庫登録",
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "warehouse": {
+                      "type": "string"
+                    },
+                    "inbound_date": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "product_code": {
+                      "type": "string"
+                    },
+                    "inbound_quantity": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "登録成功"
+          },
+          "400": {
+            "description": "リクエストが不正"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "product_code",
+                  "inbound_quantity",
+                  "inbound_date",
+                  "warehouse"
+                ],
+                "properties": {
+                  "warehouse": {
+                    "type": "string"
+                  },
+                  "inbound_date": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "product_code": {
+                    "type": "string"
+                  },
+                  "inbound_quantity": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "description": "<h2 id=\"\">概要</h2> <p>APIに入庫情報をPOSTする。</p>",
+        "tags": [
+          "入出庫管理"
+        ]
+      }
+    },
+    "/api/outbounds": {
+      "post": {
+        "summary": "出庫登録",
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "warehouse": {
+                      "type": "string"
+                    },
+                    "product_code": {
+                      "type": "string"
+                    },
+                    "outbound_date": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "outbound_quantity": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "登録成功"
+          },
+          "400": {
+            "description": "リクエストが不正"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "product_code",
+                  "outbound_quantity",
+                  "outbound_date",
+                  "warehouse"
+                ],
+                "properties": {
+                  "warehouse": {
+                    "type": "string"
+                  },
+                  "product_code": {
+                    "type": "string"
+                  },
+                  "outbound_date": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "outbound_quantity": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "description": "<h2 id=\"\">概要</h2> <p>APIに出庫情報をPOSTする。</p>",
+        "tags": [
+          "入出庫管理"
+        ]
+      }
+    },
+    "/api/orders": {
+      "post": {
+        "summary": "発注データ登録",
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "order_id": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "supplier": {
+                      "type": "string"
+                    },
+                    "order_date": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "order_status": {
+                      "type": "string"
+                    },
+                    "product_code": {
+                      "type": "string"
+                    },
+                    "delivery_date": {
+                      "type": "string",
+                      "format": "date"
+                    },
+                    "order_quantity": {
+                      "type": "integer"
+                    },
+                    "order_supplier": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "登録成功"
+          },
+          "400": {
+            "description": "リクエストが不正"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "product_code",
+                  "order_quantity",
+                  "supplier",
+                  "delivery_date",
+                  "order_date",
+                  "order_status",
+                  "order_supplier"
+                ],
+                "properties": {
+                  "supplier": {
+                    "type": "string"
+                  },
+                  "order_date": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "order_status": {
+                    "type": "string"
+                  },
+                  "product_code": {
+                    "type": "string"
+                  },
+                  "delivery_date": {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "order_quantity": {
+                    "type": "integer"
+                  },
+                  "order_supplier": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "description": "<h2 id=\"\">概要</h2> <p>APIに発注データをPOSTする。</p>",
+        "tags": [
+          "発注管理"
+        ]
+      }
+    },
+    "/api/inventory-movements": {
+      "post": {
+        "summary": "在庫移動登録",
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "quantity": {
+                      "type": "integer"
+                    },
+                    "movement_id": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "product_code": {
+                      "type": "string"
+                    },
+                    "movement_date": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "source_warehouse": {
+                      "type": "string"
+                    },
+                    "destination_warehouse": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "登録成功"
+          },
+          "400": {
+            "description": "リクエストが不正"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "product_code",
+                  "quantity",
+                  "source_warehouse",
+                  "destination_warehouse",
+                  "movement_date"
+                ],
+                "properties": {
+                  "quantity": {
+                    "type": "integer"
+                  },
+                  "product_code": {
+                    "type": "string"
+                  },
+                  "movement_date": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "source_warehouse": {
+                    "type": "string"
+                  },
+                  "destination_warehouse": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "description": "<h2 id=\"\">概要</h2> <p>APIに在庫移動データをPOSTする。</p>",
+        "tags": [
+          "在庫移動管理"
+        ]
+      }
+    },
+    "/api/inventory-adjustments": {
+      "post": {
+        "summary": "在庫調整登録",
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "quantity": {
+                      "type": "integer"
+                    },
+                    "warehouse": {
+                      "type": "string"
+                    },
+                    "product_code": {
+                      "type": "string"
+                    },
+                    "adjustment_id": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "adjustment_date": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "adjustment_reason": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "登録成功"
+          },
+          "400": {
+            "description": "リクエストが不正"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "product_code",
+                  "quantity",
+                  "adjustment_reason",
+                  "adjustment_date",
+                  "warehouse"
+                ],
+                "properties": {
+                  "quantity": {
+                    "type": "integer"
+                  },
+                  "warehouse": {
+                    "type": "string"
+                  },
+                  "product_code": {
+                    "type": "string"
+                  },
+                  "adjustment_date": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "adjustment_reason": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "description": "<h2 id=\"\">概要</h2> <p>APIに在庫調整データをPOSTする。</p>",
+        "tags": [
+          "在庫調整管理"
+        ]
+      }
+    },
+    "/api/alerts/settings": {
+      "post": {
+        "summary": "アラート通知設定",
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "alert_type": {
+                      "type": "string"
+                    },
+                    "notification_destination": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "設定成功"
+          },
+          "400": {
+            "description": "リクエストが不正"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "alert_type",
+                  "notification_destination"
+                ],
+                "properties": {
+                  "alert_type": {
+                    "type": "string"
+                  },
+                  "notification_destination": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "description": "<h2 id=\"\">概要</h2> <p>APIにアラートの種類と通知先をPOSTする。</p>",
+        "tags": [
+          "アラート機能"
+        ]
+      }
+    },
+    "/api/inventory/alerts/settings": {
+      "post": {
+        "summary": "在庫アラート設定",
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "threshold": {
+                      "type": "integer"
+                    },
+                    "alert_type": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "設定成功"
+          },
+          "400": {
+            "description": "リクエストが不正"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "alert_type",
+                  "threshold"
+                ],
+                "properties": {
+                  "threshold": {
+                    "type": "integer"
+                  },
+                  "alert_type": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "description": "<h2 id=\"\">概要</h2> <p>APIにアラートの種類と条件をPOSTする。</p>",
+        "tags": [
+          "アラート機能"
+        ]
+      }
+    },
+    "/api/users": {
+      "post": {
+        "summary": "ユーザー登録",
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "role": {
+                      "type": "string"
+                    },
+                    "user_id": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "username": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "登録成功"
+          },
+          "400": {
+            "description": "リクエストが不正"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "user_id",
+                  "username",
+                  "password",
+                  "role"
+                ],
+                "properties": {
+                  "role": {
+                    "type": "string"
+                  },
+                  "user_id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "username": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "description": "<h2 id=\"\">概要</h2> <p>APIにユーザーID、パスワード、権限をPOSTする。</p>",
+        "tags": [
+          "アクセス権限管理"
+        ]
+      }
+    },
+    "/api/users/{user_id}/permissions": {
+      "put": {
+        "summary": "ユーザー権限設定",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "role": {
+                      "type": "string"
+                    },
+                    "user_id": {
+                      "type": "string",
+                      "format": "uuid"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "設定成功"
+          },
+          "400": {
+            "description": "リクエストが不正"
+          },
+          "404": {
+            "description": "ユーザーが見つからない"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user_id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "role"
+                ],
+                "properties": {
+                  "role": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "description": "<h2 id=\"\">概要</h2> <p>APIにユーザーIDと権限をPUTする。</p>",
+        "tags": [
+          "アクセス権限管理"
+        ]
+      }
+    },
+    "/api/orders/{orderId}": {
+      "put": {
+        "summary": "発注データ更新",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "order_id": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "supplier": {
+                      "type": "string"
+                    },
+                    "order_status": {
+                      "type": "string"
+                    },
+                    "product_code": {
+                      "type": "string"
+                    },
+                    "delivery_date": {
+                      "type": "string",
+                      "format": "date"
+                    },
+                    "order_quantity": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "更新成功"
+          },
+          "400": {
+            "description": "リクエストが不正"
+          },
+          "404": {
+            "description": "発注データが見つからない"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "orderId",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [],
+                "properties": {
+                  "supplier": {
+                    "type": "string"
+                  },
+                  "order_status": {
+                    "type": "string"
+                  },
+                  "product_code": {
+                    "type": "string"
+                  },
+                  "delivery_date": {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "order_quantity": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "description": "<h2 id=\"\">概要</h2> <p>APIに発注IDと更新内容をPUTする。</p>",
+        "tags": [
+          "発注管理"
+        ]
+      },
+      "get": {
+        "summary": "発注データ取得",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "order_id": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "supplier": {
+                      "type": "string"
+                    },
+                    "order_status": {
+                      "type": "string"
+                    },
+                    "product_code": {
+                      "type": "string"
+                    },
+                    "delivery_date": {
+                      "type": "string",
+                      "format": "date"
+                    },
+                    "order_quantity": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "取得成功"
+          },
+          "400": {
+            "description": "リクエストが不正"
+          },
+          "404": {
+            "description": "発注データが見つからない"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "orderId",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true
+          }
+        ],
+        "description": "<h2 id=\"\">概要</h2> <p>APIに発注IDをGETする。</p>",
+        "tags": [
+          "発注管理"
+        ]
+      }
+    },
+    "/api/orders/{orderId}/approve": {
+      "put": {
+        "summary": "発注承認",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "order_id": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "order_status": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "承認成功"
+          },
+          "400": {
+            "description": "リクエストが不正"
+          },
+          "404": {
+            "description": "発注データが見つからない"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "orderId",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "order_status"
+                ],
+                "properties": {
+                  "order_status": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "description": "<h2 id=\"\">概要</h2> <p>APIに発注IDと承認ステータスをPUTする。</p>",
+        "tags": [
+          "発注管理"
+        ]
+      }
+    },
+    "/api/orders/{orderId}/reject": {
+      "put": {
+        "summary": "発注却下",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "order_id": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "order_status": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "却下成功"
+          },
+          "400": {
+            "description": "リクエストが不正"
+          },
+          "404": {
+            "description": "発注データが見つからない"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "orderId",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "order_status",
+                  "rejection_reason"
+                ],
+                "properties": {
+                  "order_status": {
+                    "type": "string"
+                  },
+                  "rejection_reason": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "description": "<h2 id=\"\">概要</h2> <p>APIに発注IDと却下理由をPUTする。</p>",
+        "tags": [
+          "発注管理"
+        ]
+      }
+    },
+    "/api/suppliers": {
+      "post": {
+        "summary": "サプライヤー登録",
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "address": {
+                      "type": "string"
+                    },
+                    "supplier_id": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "contact_info": {
+                      "type": "string"
+                    },
+                    "supplier_name": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "登録成功"
+          },
+          "400": {
+            "description": "リクエストが不正"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "supplier_name",
+                  "contact_info",
+                  "address"
+                ],
+                "properties": {
+                  "address": {
+                    "type": "string"
+                  },
+                  "contact_info": {
+                    "type": "string"
+                  },
+                  "supplier_name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "description": "<h2 id=\"\">概要</h2> <p>APIにサプライヤー名、連絡先、住所をPOSTする。</p>",
+        "tags": [
+          "発注管理"
+        ]
+      }
+    },
+    "/api/operation-logs": {
+      "post": {
+        "summary": "操作ログ記録",
+        "responses": {
+          "201": {
+            "description": "記録成功"
+          },
+          "400": {
+            "description": "リクエストが不正"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "user_id",
+                  "timestamp",
+                  "operation_type",
+                  "data"
+                ],
+                "properties": {
+                  "data": {
+                    "type": "string"
+                  },
+                  "user_id": {
+                    "type": "string"
+                  },
+                  "timestamp": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "operation_type": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "description": "<h2 id=\"\">概要</h2> <p>APIに操作ログをPOSTする。</p>",
+        "tags": [
+          "操作ログ記録"
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "在庫情報管理",
+      "description": ""
+    },
+    {
+      "name": "入出庫管理",
+      "description": ""
+    },
+    {
+      "name": "発注管理",
+      "description": ""
+    },
+    {
+      "name": "在庫移動管理",
+      "description": ""
+    },
+    {
+      "name": "在庫調整管理",
+      "description": ""
+    },
+    {
+      "name": "アラート機能",
+      "description": ""
+    },
+    {
+      "name": "アクセス権限管理",
+      "description": ""
+    },
+    {
+      "name": "操作ログ記録",
+      "description": ""
+    }
+  ]
+}

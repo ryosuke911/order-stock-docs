@@ -1,0 +1,69 @@
+# プロジェクトドキュメント依存関係
+1.プロジェクト概要:
+  project_overview.md:
+    depends_on: []  # 最上位文書のため依存関係なし
+
+2.現行業務フロー:
+  受発注処理_現行業務フロー.md:
+    depends_on: 
+      - "../1.プロジェクト概要/project_overview.md"
+  発注処理_現行業務フロー.md:
+    depends_on:
+      - "受発注処理_現行業務フロー.md"
+  在庫管理_現行業務フロー.md:
+    depends_on:
+      - "受発注処理_現行業務フロー.md"
+  在庫データ管理_現行業務フロー.md:
+    depends_on:
+      - "在庫管理_現行業務フロー.md"
+  在庫発注状況管理_現行業務フロー.md:
+    depends_on:
+      - "在庫管理_現行業務フロー.md"
+      - "発注処理_現行業務フロー.md"
+  在庫アラート管理_現行業務フロー.md:
+    depends_on:
+      - "在庫データ管理_現行業務フロー.md"
+
+3.業務要件一覧:
+  business_requirements.md:
+    depends_on:
+      - "../1.プロジェクト概要/project_overview.md"
+      - "../2.現行業務フロー/*.md"  # 全ての現行業務フローに依存
+
+4.システム化業務フロー:
+  受注処理_システム化業務フロー.md:
+    depends_on:
+      - "../2.現行業務フロー/受発注処理_現行業務フロー.md"
+      - "../3.業務要件一覧/business_requirements.md"
+  発注処理_システム化業務フロー.md:
+    depends_on:
+      - "../2.現行業務フロー/発注処理_現行業務フロー.md"
+      - "../3.業務要件一覧/business_requirements.md"
+  在庫管理_システム化業務フロー.md:
+    depends_on:
+      - "../2.現行業務フロー/在庫管理_現行業務フロー.md"
+      - "../3.業務要件一覧/business_requirements.md"
+  在庫データ管理_システム化業務フロー.md:
+    depends_on:
+      - "../2.現行業務フロー/在庫データ管理_現行業務フロー.md"
+      - "../3.業務要件一覧/business_requirements.md"
+  在庫発注状況管理_システム化業務フロー.md:
+    depends_on:
+      - "../2.現行業務フロー/在庫発注状況管理_現行業務フロー.md"
+      - "../3.業務要件一覧/business_requirements.md"
+  在庫アラート管理_システム化業務フロー.md:
+    depends_on:
+      - "../2.現行業務フロー/在庫アラート管理_現行業務フロー.md"
+      - "../3.業務要件一覧/business_requirements.md"
+
+5.機能要件一覧:
+  functional_requirements.md:
+    depends_on:
+      - "../3.業務要件一覧/business_requirements.md"
+      - "../4.システム化業務フロー.md/*.md"  # 全てのシステム化業務フローに依存
+
+6.非機能要件一覧:
+  non_functional_requirements.md:
+    depends_on:
+      - "../3.業務要件一覧/business_requirements.md"
+      - "../5.機能要件一覧/functional_requirements.md"
